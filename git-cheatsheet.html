@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guia Rápido de Git — Comandos Essenciais</title>
+  <meta name="description" content="Guia rápido em HTML com os principais comandos do Git para usar no dia a dia." />
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --panel: #121318;
+      --text: #e6e6e6;
+      --muted: #a9b0bb;
+      --accent: #7cc4ff;
+      --accent-2: #8affc1;
+      --border: #2a2f3a;
+      --code-bg: #0f1218;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f7f9fc;
+        --panel: #ffffff;
+        --text: #1f2937;
+        --muted: #475569;
+        --accent: #0ea5e9;
+        --accent-2: #10b981;
+        --border: #e5e7eb;
+        --code-bg: #f3f4f6;
+      }
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container{
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+      max-width: 980px;
+    }
+    header{
+      margin-bottom: 24px;
+    }
+    .badge{
+      display:inline-block;
+      font-size:12px;
+      padding:4px 10px;
+      border:1px solid var(--border);
+      border-radius:9999px;
+      color:var(--muted);
+      background:transparent;
+    }
+    h1{
+      font-size: clamp(26px, 4vw, 44px);
+      line-height:1.2;
+      margin: 8px 0 4px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle{
+      color: var(--muted);
+      font-size: 16px;
+      margin: 0 0 20px;
+    }
+    .panel{
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px 0 28px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.15);
+    }
+    .toc a{
+      color: var(--text);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02));
+    }
+    .toc a:hover{
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    h2{
+      margin-top: 36px;
+      font-size: clamp(22px, 3vw, 28px);
+      letter-spacing:-0.01em;
+    }
+    h3{
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--muted);
+    }
+    p{margin: 10px 0}
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 14px;
+    }
+    pre{
+      background: var(--code-bg);
+      border:1px solid var(--border);
+      padding: 14px;
+      border-radius: 12px;
+      overflow:auto;
+      position: relative;
+    }
+    .copy{
+      position:absolute; top:8px; right:8px;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      color:var(--text);
+      background:rgba(0,0,0,.15);
+      cursor:pointer;
+    }
+    .copy:hover{ border-color: var(--accent) }
+    .kbd{font-family:inherit; border:1px solid var(--border); padding:2px 6px;border-radius:6px; background:var(--panel); color:var(--muted);}
+    ul{padding-left: 18px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .footer{
+      margin-top: 36px;
+      color:var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+    a.inline{color:var(--accent); text-decoration:none}
+    a.inline:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Cheat Sheet</span>
+      <h1>Guia Rápido de Git — Comandos Essenciais</h1>
+      <p class="subtitle">HTML pronto para colocar no repositório. Use os blocos abaixo para copiar os comandos mais usados no dia a dia.</p>
+    </header>
+
+    <div class="panel toc">
+      <div class="grid">
+        <a href="#inicio">Início rápido</a>
+        <a href="#ciclo">Ciclo básico</a>
+        <a href="#branch">Branches &amp; Merge</a>
+        <a href="#remoto">Remoto</a>
+        <a href="#stash">Stash</a>
+        <a href="#log">Log &amp; Diff</a>
+        <a href="#desfazer">Desfazer (restore/reset/revert)</a>
+        <a href="#tags">Tags &amp; Releases</a>
+        <a href="#rebase">Rebase</a>
+        <a href="#cherry">Cherry‑pick</a>
+        <a href="#submodules">Submódulos</a>
+        <a href="#gitignore">.gitignore</a>
+        <a href="#config">Config &amp; credenciais</a>
+        <a href="#ssh">SSH (opcional)</a>
+        <a href="#problemas">Problemas comuns</a>
+      </div>
+    </div>
+
+    <section id="inicio">
+      <h2>Início rápido</h2>
+      <p>Configure sua identidade e crie/clone um repositório.</p>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>git config --global user.name "Seu Nome"
+git config --global user.email "voce@exemplo.com"
+git config --global init.defaultBranch main
+
+# criar repositório local
+git init
+
+# clonar um repositório existente
+git clone https://github.com/usuario/projeto.git</code></pre>
+    </section>
+
+    <section id="ciclo">
+      <h2>Ciclo básico</h2>
+      <p>Fluxo de trabalho padrão: verificar, adicionar, commitar e sincronizar.</p>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># status do repositório
+git status
+
+# adicionar alterações (pontual/geral)
+git add arquivo.txt
+git add .
+
+# criar commit
+git commit -m "mensagem do commit"
+
+# obter atualizações remotas (sem mesclar)
+git fetch
+
+# integrar/atualizar a branch local
+git pull        # (por padrão faz merge)
+git pull --rebase
+
+# enviar commits para o remoto
+git push origin main</code></pre>
+    </section>
+
+    <section id="branch">
+      <h2>Branches &amp; Merge</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># listar branches locais e remotas
+git branch
+git branch -r
+
+# criar e trocar de branch
+git switch -c minha-branch        # (ou: git checkout -b minha-branch)
+git switch main                   # voltar para main
+
+# enviar branch para o remoto
+git push -u origin minha-branch
+
+# mesclar outra branch na atual
+git merge minha-branch
+
+# excluir branch já mesclada
+git branch -d minha-branch
+git push origin --delete minha-branch</code></pre>
+    </section>
+
+    <section id="remoto">
+      <h2>Remoto</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># verificar remotos
+git remote -v
+
+# adicionar/alterar remoto
+git remote add origin https://github.com/usuario/projeto.git
+git remote set-url origin https://github.com/usuario/novo.git
+
+# sincronizar referências
+git fetch --all --prune
+
+# atualizar branch local rebaseando mudanças remotas
+git pull --rebase origin main
+
+# primeiro push (cria upstream)
+git push -u origin main</code></pre>
+    </section>
+
+    <section id="stash">
+      <h2>Stash</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># salvar alterações temporariamente
+git stash
+git stash push -m "WIP: ajuste login" --include-untracked
+
+# listar e aplicar
+git stash list
+git stash show -p
+git stash apply
+git stash pop
+
+# remover
+git stash drop
+git stash clear</code></pre>
+    </section>
+
+    <section id="log">
+      <h2>Log &amp; Diff</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># histórico resumido e visual
+git log --oneline --graph --decorate --all
+
+# detalhes de um commit/arquivo
+git show &lt;hash&gt;
+git blame caminho/arquivo.ext
+
+# diferenças
+git diff                   # não indexado
+git diff --staged          # pronto para commit</code></pre>
+    </section>
+
+    <section id="desfazer">
+      <h2>Desfazer (restore/reset/revert)</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># descartar mudanças locais em um arquivo
+git restore caminho/arquivo.ext
+
+# tirar arquivo da área de stage
+git restore --staged caminho/arquivo.ext
+
+# voltar N commits mantendo alterações como "não stageadas"
+git reset --soft HEAD~1
+
+# voltar N commits descartando alterações
+git reset --hard HEAD~1
+
+# desfazer um commit específico através de um commit inverso
+git revert &lt;hash&gt;</code></pre>
+      <p><strong>Atenção:</strong> <code>reset --hard</code> remove alterações locais sem volta. Use com cuidado.</p>
+    </section>
+
+    <section id="tags">
+      <h2>Tags &amp; Releases</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># criar e listar tags
+git tag -a v1.0.0 -m "primeiro release"
+git tag
+
+# enviar tags
+git push origin v1.0.0
+git push origin --tags</code></pre>
+    </section>
+
+    <section id="rebase">
+      <h2>Rebase</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># atualizar sua branch com a main
+git fetch origin
+git rebase origin/main
+
+# rebase interativo (editar/combinar commits)
+git rebase -i HEAD~5</code></pre>
+    </section>
+
+    <section id="cherry">
+      <h2>Cherry‑pick</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># aplicar um commit específico na branch atual
+git cherry-pick &lt;hash&gt;</code></pre>
+    </section>
+
+    <section id="submodules">
+      <h2>Submódulos</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># adicionar submódulo
+git submodule add https://github.com/usuario/lib.git libs/lib
+
+# clonar/atualizar submódulos
+git submodule update --init --recursive</code></pre>
+    </section>
+
+    <section id="gitignore">
+      <h2>.gitignore</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># exemplos de padrões
+node_modules/
+dist/
+*.log
+.env
+
+# se já foi versionado, remova do índice e commite novamente
+git rm -r --cached .
+git add .
+git commit -m "Respeitar .gitignore"</code></pre>
+    </section>
+
+    <section id="config">
+      <h2>Config &amp; credenciais</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># ver configurações
+git config --list
+
+# normalização de fim de linha (Windows)
+git config --global core.autocrlf true
+
+# Linux/macOS (sugestão)
+# git config --global core.autocrlf input
+
+# cache/gerenciador de credenciais (Windows)
+git config --global credential.helper manager-core</code></pre>
+    </section>
+
+    <section id="ssh">
+      <h2>SSH (opcional)</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># gerar chave
+ssh-keygen -t ed25519 -C "seu-email@exemplo.com"
+
+# iniciar o agente e adicionar a chave
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519</code></pre>
+    </section>
+
+    <section id="problemas">
+      <h2>Problemas comuns &amp; Dicas</h2>
+      <ul>
+        <li><strong>Pull criando merge commit indesejado:</strong> use <code>git pull --rebase</code>.</li>
+        <li><strong>“Permission denied (publickey)”:</strong> configure SSH ou use HTTPS com o gerenciador de credenciais.</li>
+        <li><strong>Conflitos de merge:</strong> edite arquivos marcados, <code>git add</code> e finalize com <code>git merge --continue</code> ou <code>git rebase --continue</code>.</li>
+        <li><strong>Apontar a branch principal para <code>main</code>:</strong> <code>git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main</code> (quando necessário).</li>
+        <li><strong>Trabalhe em branches pequenas:</strong> facilita code review e evita conflitos grandes.</li>
+      </ul>
+    </section>
+
+    <div class="panel">
+      <h3>Como usar este arquivo</h3>
+      <p>Salve este arquivo como <code>git-cheatsheet.html</code> na raiz do seu repositório e abra no navegador.</p>
+      <p>Dica: adicione um link no <code>README.md</code> para facilitar o acesso.</p>
+    </div>
+
+    <footer class="footer">
+      <p>Feito para equipes e cursos. Atualize conforme suas práticas de fluxo (Git Flow, Trunk‑Based, etc.).</p>
+    </footer>
+  </div>
+
+  <script>
+    function copyBlock(btn){
+      const pre = btn.nextElementSibling;
+      const text = pre.innerText;
+      navigator.clipboard.writeText(text).then(()=>{
+        const old = btn.textContent;
+        btn.textContent = "Copiado ✓";
+        setTimeout(()=>btn.textContent = old, 1200);
+      });
+    }
+  </script>
+</body>
+</html>
