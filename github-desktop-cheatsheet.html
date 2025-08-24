@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guia Rápido — GitHub Desktop</title>
+  <meta name="description" content="Guia rápido em HTML com os principais fluxos e ações no GitHub Desktop, incluindo equivalentes no Git CLI." />
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --panel: #121318;
+      --text: #e6e6e6;
+      --muted: #a9b0bb;
+      --accent: #7cc4ff;
+      --accent-2: #8affc1;
+      --border: #2a2f3a;
+      --code-bg: #0f1218;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f7f9fc;
+        --panel: #ffffff;
+        --text: #1f2937;
+        --muted: #475569;
+        --accent: #0ea5e9;
+        --accent-2: #10b981;
+        --border: #e5e7eb;
+        --code-bg: #f3f4f6;
+      }
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container{
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+      max-width: 980px;
+    }
+    header{
+      margin-bottom: 24px;
+    }
+    .badge{
+      display:inline-block;
+      font-size:12px;
+      padding:4px 10px;
+      border:1px solid var(--border);
+      border-radius:9999px;
+      color:var(--muted);
+    }
+    h1{
+      font-size: clamp(26px, 4vw, 44px);
+      line-height:1.2;
+      margin: 8px 0 4px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle{
+      color: var(--muted);
+      font-size: 16px;
+      margin: 0 0 20px;
+    }
+    .panel{
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px 0 28px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.15);
+    }
+    .toc a{
+      color: var(--text);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02));
+    }
+    .toc a:hover{
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    h2{
+      margin-top: 36px;
+      font-size: clamp(22px, 3vw, 28px);
+      letter-spacing:-0.01em;
+    }
+    h3{
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--muted);
+    }
+    p{margin: 10px 0}
+    pre{
+      background: var(--code-bg);
+      border:1px solid var(--border);
+      padding: 14px;
+      border-radius: 12px;
+      overflow:auto;
+      position: relative;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 14px;
+    }
+    .kbd{font-family:inherit; border:1px solid var(--border); padding:2px 6px;border-radius:6px; background:var(--panel); color:var(--muted);}
+    ul{padding-left: 18px}
+    ol{padding-left: 18px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .equiv{
+      margin-top:8px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .footer{
+      margin-top: 36px;
+      color:var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+    a.inline{color:var(--accent); text-decoration:none}
+    a.inline:hover{text-decoration:underline}
+    .callout{
+      border:1px dashed var(--border);
+      border-radius:12px;
+      padding:12px 14px;
+      color:var(--muted);
+      margin:10px 0 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Cheat Sheet</span>
+      <h1>Guia Rápido — GitHub Desktop</h1>
+      <p class="subtitle">Fluxos essenciais no app gráfico do GitHub. Ideal para colocar no seu repositório e compartilhar com o time.</p>
+    </header>
+
+    <div class="panel toc">
+      <div class="grid">
+        <a href="#inicio">Instalação &amp; login</a>
+        <a href="#conceitos">Conceitos &amp; interface</a>
+        <a href="#repos">Criar, Clonar ou Abrir</a>
+        <a href="#ciclo">Ciclo básico (commit/push/pull)</a>
+        <a href="#branches">Branches</a>
+        <a href="#pr">Pull Requests</a>
+        <a href="#conflitos">Resolver conflitos</a>
+        <a href="#descartar">Descartar/Restaurar mudanças</a>
+        <a href="#stash">Stash ao trocar de branch</a>
+        <a href="#historico">Histórico &amp; Reverter commit</a>
+        <a href="#remoto">Remotos &amp; publicar</a>
+        <a href="#editor">Abrir no editor</a>
+        <a href="#configs">Configurações úteis</a>
+        <a href="#equivalentes">Equivalentes no Git CLI</a>
+        <a href="#dicas">Problemas comuns &amp; dicas</a>
+      </div>
+    </div>
+
+    <section id="inicio">
+      <h2>Instalação &amp; login</h2>
+      <ol>
+        <li>Baixe em <span class="kbd">desktop.github.com</span> e instale.</li>
+        <li>Abra o aplicativo e faça login com sua conta do GitHub.</li>
+        <li>Opcional: conecte contas corporativas/Enterprise se necessário.</li>
+      </ol>
+      <div class="callout">O GitHub Desktop funciona como uma camada visual para os comandos Git mais usados.</div>
+    </section>
+
+    <section id="conceitos">
+      <h2>Conceitos &amp; interface</h2>
+      <ul>
+        <li><strong>Current Repository</strong>: repositório selecionado (canto superior esquerdo).</li>
+        <li><strong>Current Branch</strong>: branch ativa.</li>
+        <li><strong>Changes</strong>: arquivos modificados e mensagem de commit.</li>
+        <li><strong>History</strong>: histórico de commits e detalhes.</li>
+        <li><strong>Fetch/Push/Pull</strong>: botões no topo sincronizam com o remoto.</li>
+      </ul>
+    </section>
+
+    <section id="repos">
+      <h2>Criar, Clonar ou Abrir</h2>
+      <ol>
+        <li><strong>Clone</strong>: <em>File → Clone repository…</em> (URL/Enterprise/GitHub.com).</li>
+        <li><strong>Open</strong> um repo existente: <em>File → Add local repository…</em>.</li>
+        <li><strong>Create</strong> um novo repo: <em>File → New repository…</em>.</li>
+      </ol>
+      <p class="equiv">CLI equivalente: <code>git clone &lt;url&gt;</code> · <code>git init</code></p>
+    </section>
+
+    <section id="ciclo">
+      <h2>Ciclo básico (commit → push → pull)</h2>
+      <ol>
+        <li>Na aba <strong>Changes</strong>, selecione os arquivos que deseja comitar (checkbox).</li>
+        <li>Escreva uma <strong>mensagem de commit</strong> clara.</li>
+        <li>Clique em <strong>Commit to &lt;sua-branch&gt;</strong>.</li>
+        <li><strong>Push</strong> para enviar ao remoto (botão no topo).</li>
+        <li><strong>Pull</strong>/<strong>Fetch</strong> para trazer atualizações do remoto.</li>
+      </ol>
+      <p class="equiv">CLI equivalente: <code>git add .</code> · <code>git commit -m "..."</code> · <code>git push</code> · <code>git pull</code></p>
+    </section>
+
+    <section id="branches">
+      <h2>Branches</h2>
+      <ol>
+        <li>Clique no seletor de <strong>branch</strong> (topo) e <em>New Branch</em>.</li>
+        <li>Dê um nome (ex.: <code>feature/login</code>) e crie.</li>
+        <li>Para publicar no remoto, clique em <strong>Publish branch</strong>.</li>
+        <li>Para trocar de branch, use o seletor e escolha a branch desejada.</li>
+        <li>Para excluir: <em>Branch → Delete…</em> (após merge ou quando seguro).</li>
+      </ol>
+      <p class="equiv">CLI equivalente: <code>git switch -c feature/login</code> · <code>git push -u origin feature/login</code></p>
+    </section>
+
+    <section id="pr">
+      <h2>Pull Requests</h2>
+      <ol>
+        <li>Com sua branch publicada, clique em <strong>Create Pull Request</strong> no topo (ou <em>Branch → Create Pull Request…</em>).</li>
+        <li>O app abrirá o navegador em <strong>GitHub.com</strong> para você preencher título, descrição e enviar o PR.</li>
+        <li>Após o merge no GitHub, volte ao Desktop e <strong>Pull</strong> na <code>main</code> para trazer as mudanças.</li>
+      </ol>
+      <p class="equiv">CLI equivalente: abrir PR via GitHub CLI (<code>gh pr create</code>) ou no site.</p>
+    </section>
+
+    <section id="conflitos">
+      <h2>Resolver conflitos</h2>
+      <ol>
+        <li>Ao fazer <strong>Pull/Merge</strong> com conflito, o Desktop lista os arquivos conflitantes.</li>
+        <li>Escolha <strong>Open in editor</strong> para resolver manualmente ou use as opções de escolher um lado.</li>
+        <li>Marque o arquivo como resolvido (checkbox) e faça o <strong>Commit merge</strong>.</li>
+      </ol>
+      <p class="equiv">CLI equivalente: editar marcadores <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>git add</code>, <code>git merge --continue</code> ou <code>git rebase --continue</code>.</p>
+    </section>
+
+    <section id="descartar">
+      <h2>Descartar/Restaurar mudanças</h2>
+      <ul>
+        <li><strong>Descartar arquivo</strong>: clique direito no arquivo em <em>Changes</em> → <em>Discard Changes</em>.</li>
+        <li><strong>Descartar tudo</strong>: menu <em>Repository → Discard All Changes…</em> (cuidado!).</li>
+        <li><strong>Restaurar</strong> um arquivo parcialmente: selecione linhas no diff e clique em <em>Discard Selected Lines</em> ou <em>Stage Selected Lines</em>.</li>
+      </ul>
+      <p class="equiv">CLI equivalente: <code>git restore &lt;arquivo&gt;</code> · <code>git checkout -- &lt;arquivo&gt;</code> (legado)</p>
+    </section>
+
+    <section id="stash">
+      <h2>Stash ao trocar de branch</h2>
+      <p>Ao trocar de branch com mudanças locais, o Desktop oferece a opção <strong>“Stash changes to switch branches”</strong>. Marque para guardar temporariamente.</p>
+      <ul>
+        <li>Depois, para aplicar: o app sugere <strong>Pop stash</strong> ao voltar.</li>
+      </ul>
+      <p class="equiv">CLI equivalente: <code>git stash</code> · <code>git stash pop</code></p>
+    </section>
+
+    <section id="historico">
+      <h2>Histórico &amp; Reverter commit</h2>
+      <ul>
+        <li>Aba <strong>History</strong> para visualizar commits e arquivos alterados.</li>
+        <li><strong>Reverter commit</strong>: clique direito em um commit → <em>Revert This Commit</em> (o app cria um novo commit inverso).</li>
+        <li><strong>Copiar hash</strong>: clique direito no commit → <em>Copy SHA</em>.</li>
+      </ul>
+      <p class="equiv">CLI equivalente: <code>git log --oneline</code> · <code>git show &lt;sha&gt;</code> · <code>git revert &lt;sha&gt;</code></p>
+    </section>
+
+    <section id="remoto">
+      <h2>Remotos &amp; publicar</h2>
+      <ul>
+        <li><strong>Publish repository</strong> para criar o remoto no GitHub.</li>
+        <li><strong>Repository → Repository Settings… → Remote</strong>: ver/alterar URL, adicionar outros remotos.</li>
+        <li><strong>Fetch origin</strong> sincroniza referências sem mesclar.</li>
+        <li><strong>Pull</strong> traz e integra mudanças da branch remota.</li>
+        <li><strong>Push</strong> envia seus commits.</li>
+      </ul>
+      <p class="equiv">CLI: <code>git remote -v</code> · <code>git remote set-url origin &lt;url&gt;</code> · <code>git fetch</code> · <code>git pull</code> · <code>git push</code></p>
+    </section>
+
+    <section id="editor">
+      <h2>Abrir no editor</h2>
+      <ul>
+        <li><strong>Open in Visual Studio Code</strong> (ou editor configurado) pelo botão na barra superior.</li>
+        <li>Configure o editor padrão: <em>File → Options… → Integrations → External Editor</em>.</li>
+        <li>Abra no Explorer/Finder: <em>Repository → Show in Explorer</em>.</li>
+      </ul>
+    </section>
+
+    <section id="configs">
+      <h2>Configurações úteis</h2>
+      <ul>
+        <li><strong>Options → Accounts</strong>: gerenciar logins GitHub/Enterprise.</li>
+        <li><strong>Options → Integrations</strong>: editor e shell padrão (Git Bash, PowerShell, etc.).</li>
+        <li><strong>Options → Appearance</strong>: tema claro/escuro e preferências.</li>
+        <li><strong>Repository Settings</strong>: <em>Default branch</em>, <em>Ignored files</em> (abre o <code>.gitignore</code> no editor), remotos.</li>
+      </ul>
+    </section>
+
+    <section id="equivalentes">
+      <h2>Equivalentes no Git CLI (mapa rápido)</h2>
+      <div class="panel">
+        <h3>Criação/Clone</h3>
+        <pre>Desktop: New repository / Clone repository
+CLI:     git init
+         git clone &lt;url&gt;</pre>
+
+        <h3>Commit &amp; Sync</h3>
+        <pre>Desktop: Changes → Commit → Push/Pull/Fetch
+CLI:     git add .
+         git commit -m "mensagem"
+         git push / git pull / git fetch</pre>
+
+        <h3>Branches</h3>
+        <pre>Desktop: New Branch / Publish Branch / Switch Branch
+CLI:     git switch -c minha-branch
+         git push -u origin minha-branch
+         git switch outra-branch</pre>
+
+        <h3>Reverter</h3>
+        <pre>Desktop: History → Right click → Revert This Commit
+CLI:     git revert &lt;sha&gt;</pre>
+
+        <h3>Conflitos</h3>
+        <pre>Desktop: Resolve conflicts in editor → Commit merge
+CLI:     editar conflitos → git add → git merge --continue</pre>
+      </div>
+    </section>
+
+    <section id="dicas">
+      <h2>Problemas comuns &amp; dicas</h2>
+      <ul>
+        <li><strong>Sem botão Push</strong>: não há commits locais para enviar.</li>
+        <li><strong>Branch “ahead/behind”</strong>: use <em>Fetch</em>/<em>Pull</em> para alinhar com o remoto.</li>
+        <li><strong>“Publish branch” aparece</strong>: a branch ainda não existe no remoto; publique.</li>
+        <li><strong>Conflitos frequentes</strong>: faça Pull antes de começar e crie branches menores.</li>
+        <li><strong>.gitignore não funcionou</strong>: arquivo já versionado — remova do índice e commite novamente (veja o cheat de Git CLI).</li>
+      </ul>
+    </section>
+
+    <div class="panel">
+      <h3>Como usar este arquivo</h3>
+      <p>Salve como <code>github-desktop-cheatsheet.html</code> na raiz do repositório (ou em <code>docs/</code>) e abra no navegador.</p>
+      <p>Dica: no <code>README.md</code>, adicione um link para este guia.</p>
+    </div>
+
+    <footer class="footer">
+      <p>Atualize conforme a política de branches e PRs do seu time.</p>
+    </footer>
+  </div>
+</body>
+</html>
