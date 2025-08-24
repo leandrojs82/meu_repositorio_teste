@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guia Rápido — Markdown (GFM)</title>
+  <meta name="description" content="Guia rápido em HTML com os principais comandos Markdown (GitHub Flavored Markdown) com exemplos e blocos copiáveis." />
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --panel: #121318;
+      --text: #e6e6e6;
+      --muted: #a9b0bb;
+      --accent: #7cc4ff;
+      --accent-2: #8affc1;
+      --border: #2a2f3a;
+      --code-bg: #0f1218;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f7f9fc;
+        --panel: #ffffff;
+        --text: #1f2937;
+        --muted: #475569;
+        --accent: #0ea5e9;
+        --accent-2: #10b981;
+        --border: #e5e7eb;
+        --code-bg: #f3f4f6;
+      }
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container{
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+      max-width: 980px;
+    }
+    header{
+      margin-bottom: 24px;
+    }
+    .badge{
+      display:inline-block;
+      font-size:12px;
+      padding:4px 10px;
+      border:1px solid var(--border);
+      border-radius:9999px;
+      color:var(--muted);
+    }
+    h1{
+      font-size: clamp(26px, 4vw, 44px);
+      line-height:1.2;
+      margin: 8px 0 4px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle{
+      color: var(--muted);
+      font-size: 16px;
+      margin: 0 0 20px;
+    }
+    .panel{
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px 0 28px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.15);
+    }
+    .toc a{
+      color: var(--text);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02));
+    }
+    .toc a:hover{
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    h2{
+      margin-top: 36px;
+      font-size: clamp(22px, 3vw, 28px);
+      letter-spacing:-0.01em;
+    }
+    h3{
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--muted);
+    }
+    p{margin: 10px 0}
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 14px;
+    }
+    pre{
+      background: var(--code-bg);
+      border:1px solid var(--border);
+      padding: 14px;
+      border-radius: 12px;
+      overflow:auto;
+      position: relative;
+      margin-top: 8px;
+    }
+    .copy{
+      position:absolute; top:8px; right:8px;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      color:var(--text);
+      background:rgba(0,0,0,.15);
+      cursor:pointer;
+    }
+    .copy:hover{ border-color: var(--accent) }
+    ul, ol{padding-left: 18px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .kbd{font-family:inherit; border:1px solid var(--border); padding:2px 6px;border-radius:6px; background:var(--panel); color:var(--muted);}
+    .footer{
+      margin-top: 36px;
+      color:var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+    a.inline{color:var(--accent); text-decoration:none}
+    a.inline:hover{text-decoration:underline}
+    .note{color:var(--muted); font-size: 13px;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Cheat Sheet</span>
+      <h1>Guia Rápido — Markdown (GFM)</h1>
+      <p class="subtitle">Sintaxe principal do Markdown com extensões do <em>GitHub Flavored Markdown</em>. Copie os blocos e use no seu README ou Wiki.</p>
+    </header>
+
+    <div class="panel toc">
+      <div class="grid">
+        <a href="#titulos">Títulos</a>
+        <a href="#enfase">Ênfase</a>
+        <a href="#listas">Listas</a>
+        <a href="#links">Links &amp; Imagens</a>
+        <a href="#codigo">Código (inline e bloco)</a>
+        <a href="#citacoes">Citações (blockquote)</a>
+        <a href="#tabelas">Tabelas</a>
+        <a href="#regras">Linhas horizontais</a>
+        <a href="#tarefas">Listas de tarefas</a>
+        <a href="#footnotes">Notas de rodapé</a>
+        <a href="#html">HTML embutido</a>
+        <a href="#gfm">Extras do GitHub</a>
+        <a href="#mermaid">Diagramas Mermaid</a>
+        <a href="#escape">Escapar caracteres</a>
+      </div>
+    </div>
+
+    <section id="titulos">
+      <h2>Títulos</h2>
+      <p>Use <code>#</code> (1 a 6) antes do texto.</p>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code># Título H1
+## Título H2
+### Título H3
+#### Título H4
+##### Título H5
+###### Título H6</code></pre>
+    </section>
+
+    <section id="enfase">
+      <h2>Ênfase</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>Texto em *itálico* ou _itálico_
+Texto em **negrito** ou __negrito__
+Texto com ***negrito e itálico***
+Texto ~~riscado~~</code></pre>
+      <p class="note">Dica: use o estilo consistente no seu projeto.</p>
+    </section>
+
+    <section id="listas">
+      <h2>Listas</h2>
+      <h3>Não ordenadas</h3>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>- Item A
+- Item B
+  - Subitem B1
+  - Subitem B2
+* Marcadores também podem usar asterisco
++ Ou sinal de mais</code></pre>
+
+      <h3>Ordenadas</h3>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>1. Primeiro
+2. Segundo
+3. Terceiro
+   1. Subitem 3.1
+   2. Subitem 3.2</code></pre>
+
+      <h3>Quebras de linha</h3>
+      <p>Use dois espaços no fim da linha ou um <code>&lt;br&gt;</code>.</p>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>Linha com quebra··
+nova linha
+
+Outra forma:&lt;br&gt;
+continuação</code></pre>
+    </section>
+
+    <section id="links">
+      <h2>Links &amp; Imagens</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>[Texto do link](https://exemplo.com)
+[Título opcional](https://exemplo.com "Título ao passar o mouse")
+
+![Alt da imagem](https://exemplo.com/imagem.png)
+![Alt com título](https://exemplo.com/img.png "Descrição")</code></pre>
+      <p class="note">Use um texto alternativo (alt) descritivo para acessibilidade.</p>
+    </section>
+
+    <section id="codigo">
+      <h2>Código</h2>
+      <h3>Inline</h3>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>Use o acento grave: `console.log("Olá")`</code></pre>
+
+      <h3>Blocos com linguagem</h3>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>```bash
+git status
+git add .
+git commit -m "mensagem"
+```
+```javascript
+function somar(a, b) {
+  return a + b;
+}
+```</code></pre>
+      <p class="note">Em muitos renderizadores, indicar a linguagem ativa <em>syntax highlight</em>.</p>
+    </section>
+
+    <section id="citacoes">
+      <h2>Citações (blockquote)</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>&gt; Uma citação simples.
+&gt; 
+&gt; - Pode ter múltiplas linhas
+&gt; - E até listas
+&gt; 
+&gt; &gt; Citação aninhada</code></pre>
+    </section>
+
+    <section id="tabelas">
+      <h2>Tabelas (GFM)</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>| Coluna A | Coluna B | Coluna C |
+|----------|:--------:|---------:|
+| esquerda | centro   | direita  |
+| texto    | **bold** | 123      |</code></pre>
+      <p class="note"><code>:</code> define alinhamento (esquerda, centro, direita).</p>
+    </section>
+
+    <section id="regras">
+      <h2>Linhas horizontais</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>---
+***
+___</code></pre>
+    </section>
+
+    <section id="tarefas">
+      <h2>Listas de tarefas (GFM)</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>- [x] Tarefa concluída
+- [ ] Tarefa pendente
+- [ ] Outra tarefa</code></pre>
+    </section>
+
+    <section id="footnotes">
+      <h2>Notas de rodapé</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>Texto com nota de rodapé.[^1]
+
+[^1]: Esta é a nota explicativa.</code></pre>
+    </section>
+
+    <section id="html">
+      <h2>HTML embutido</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>Você pode misturar &lt;sup&gt;HTML&lt;/sup&gt; em trechos específicos.
+
+&lt;details&gt;
+  &lt;summary&gt;Clique para expandir&lt;/summary&gt;
+  Conteúdo oculto.
+&lt;/details&gt;</code></pre>
+    </section>
+
+    <section id="gfm">
+      <h2>Extras do GitHub (GFM)</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>@usuario                <!-- menções -->
+#123                     <!-- issues/PRs -->
+- [ ] checkboxes         <!-- tarefas -->
+~~texto riscado~~        <!-- strikethrough -->
+Autolink: https://exemplo.com</code></pre>
+    </section>
+
+    <section id="mermaid">
+      <h2>Diagramas Mermaid (GitHub)</h2>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>```mermaid
+flowchart LR
+  A[Início] --&gt; B{Decisão?}
+  B --&gt;|Sim| C[Passo 1]
+  B --&gt;|Não| D[Passo 2]
+```</code></pre>
+      <p class="note">Em repositórios GitHub, Mermaid é renderizado nativamente.</p>
+    </section>
+
+    <section id="escape">
+      <h2>Escapar caracteres</h2>
+      <p>Anteponha <code>\</code> para exibir caracteres literais.</p>
+      <pre><button class="copy" onclick="copyBlock(this)">Copiar</button><code>\*não em itálico\* \# não vira título
+\`código literal\`</code></pre>
+    </section>
+
+    <div class="panel">
+      <h3>Como usar este arquivo</h3>
+      <p>Salve como <code>markdown-cheatsheet.html</code> na raiz do repositório (ou em <code>docs/</code>) e abra no navegador.</p>
+      <p>Dica: adicione um link no <code>README.md</code> para acesso rápido.</p>
+    </div>
+
+    <footer class="footer">
+      <p>Mantenha um padrão de estilo (títulos, listas e código) para consistência entre repositórios.</p>
+    </footer>
+  </div>
+
+  <script>
+    function copyBlock(btn){
+      const pre = btn.nextElementSibling;
+      const text = pre.innerText;
+      navigator.clipboard.writeText(text).then(()=>{
+        const old = btn.textContent;
+        btn.textContent = "Copiado ✓";
+        setTimeout(()=>btn.textContent = old, 1200);
+      });
+    }
+  </script>
+</body>
+</html>
